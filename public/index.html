@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca San Agustin</title>
+    <link href="./css/output.css" rel="stylesheet">
+</head>
+<body class="font-sans">
+    
+    <header class="px-4 py-2 flex justify-between rounded-full bg-gradient-to-r from-sky-500 via-blue-500 to-blue-700 shadow-md"
+            style="width: 97%; margin: 10px auto 10px auto;">
+
+        <div class="flex gap-3 px-2 py-2">
+            <img src="https://images.squarespace-cdn.com/content/v1/5a354682f43b5511730a9451/1513965108917-86C6L7XW8928YRROYN7F/books.png?format=1500w"
+                 class="h-12 "
+                 alt="sa_logo"
+            >
+            <div class="text-white">
+                <h2>Biblioteca</h2>
+                <h2 class="font-bold">App</h2>
+            </div>
+        </div>
+
+        <div class="flex content-center py-2">
+            <input
+                id="search__input"
+                class="w-60 px-3 py-2 m-auto rounded-full"
+                type="text"
+                placeholder="Busca tu libro por titulo...">
+        </div>
+
+    </header>
+
+    <main class="w-100 px-6 py-9">
+
+        <section class="flex flex-wrap gap-3 justify-between"
+                 id="books__section">
+        </section>
+
+        <dialog class="p-3 rounded-lg backdrop-blur-md shadow-md"
+                style="width: 600px; "
+                id="book__dialog">
+        </dialog>
+
+    </main>
+
+    <footer class="h-12 text-center text-slate-300">
+        <span>Hecho por Gianmarco Cossio - 2023</span>
+    </footer>
+
+    <script src="../main.js"></script>
+</body>
+</html>

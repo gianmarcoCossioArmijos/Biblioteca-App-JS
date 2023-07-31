@@ -3,7 +3,7 @@ const baseUrl = "https://www.googleapis.com/books/v1/";
 
 async function getBooksByTitle(search) {
 
-    const response = await fetch(`${baseUrl}volumes?q=intitle${search}&key=AIzaSyChcTUGrWjVUGTn4sZgpeuHy1TQHPLakjE`);
+    const response = await fetch(`${baseUrl}volumes?q=intitle${search}`);
     const data = await response.json();
     console.log(data)
     
@@ -95,7 +95,7 @@ let inputValue = "";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    getBooksByTitle(inputValue);
+    getBooksByTitle("");
 
     const searchInput = document.getElementById("search__input");
     searchInput.addEventListener("keyup", (event) => {

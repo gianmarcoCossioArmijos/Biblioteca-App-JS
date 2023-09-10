@@ -26,13 +26,15 @@ async function getBooksByTitle(search) {
                             </div>
 
                             <div class="w-60 px-2 flex flex-col gap-2 content-center justify-center">
-                                <h3 class="font-bold">${book.volumeInfo.title !== undefined ? book.volumeInfo.title : ""}</h3>
-                                <span style="font-size: 9px;">${book.volumeInfo.authors}</span>
+                                <h3 class="font-bold">
+                                    ${book.volumeInfo.title !== undefined ? book.volumeInfo.title : ""}
+                                </h3>
+                                <span style="font-size: 9px;">${book.volumeInfo.authors !== undefined ? book.volumeInfo.authors : ""}</span>
                             </div>
 
                         </div>
 
-                        <div class="py-2 col-span-2">
+                        <div class="py-2 flex gap-1 col-span-2">
                             <button 
                             class="w-full px-4 py-2 bg-gradient-to-l from-sky-500 via-blue-500 to-blue-700 hover:bg-gradient-to-r rounded-full text-white"
                             id="book_button"
@@ -67,28 +69,66 @@ async function seeMore(idBook) {
     const booksSection = document.getElementById("book__dialog");
     let bookCard = 
                 `
-                <div class="flex gap-2">
-                    <div class="w-1/2" style="min-height: 600px;">
+                <div class="flex flex-col gap-2">
+
+                    <div class="w-full">
                         <img
-                            class="w-full rounded-lg object-fill"
+                            class="w-1/2 m-auto rounded-lg object-fill"
                             src="${data.volumeInfo.imageLinks.small !== undefined? data.volumeInfo.imageLinks.small : data.volumeInfo.imageLinks.smallThumbnail}" 
                             alt="${data.volumeInfo.title !== undefined ? data.volumeInfo.title : "book_image"}"
                             >
                     </div>
 
-                    <div class="flex flex-col gap-2 w-1/2">
-                        <h3 class="font-bold">${data.volumeInfo.title !== undefined ? data.volumeInfo.title : "" }</h3>
-                        <div class="rounded-lg object-fill">
+                    <div class="w-full w-1/2">
+                        <h3 class="font-bold text-center">${data.volumeInfo.title !== undefined ? data.volumeInfo.title : "" }</h3>
+                        <div class="rounded-lg object-fill text-center">
                             <span style="font-size: 12px;">${data.volumeInfo.publishedDate !== undefined ? data.volumeInfo.publishedDate : ""}</span>
-                            <span style="font-size: 12px;">${data.volumeInfo.authors}</span>
+                            <span style="font-size: 12px;"> - </span>
+                            <span style="font-size: 12px;">${data.volumeInfo.authors !== undefined ? data.volumeInfo.authors : ""}</span>
                         </div>
                         <p>${data.volumeInfo.description !== undefined ? data.volumeInfo.description : ""}</p>
                     </div>
+
+                    <button 
+                        class="w-full px-4 py-2 bg-gradient-to-l from-sky-500 via-blue-500 to-blue-700 hover:bg-gradient-to-r rounded-full text-white"
+                        id="readBook_button"
+                        value="${data.volumeInfo.industryIdentifiers.forEach(objeto => {
+
+                            const isbn = "ISBN:" + objeto.identifier;
+                            console.log(isbn);
+                            return isbn;
+                        })}">
+                            Leer
+                    </button>
+                    
                 </div>
                 `
     booksSection.innerHTML = bookCard;
     booksSection.showModal();
 
+    const readButton = document.getElementById("readBook_button");
+    const readBookDialog = document.getElementById("readBook__dialog");
+
+    readButton.addEventListener("click", (event => {
+        
+        const isbn = event.target.value;
+        console.log(isbn);
+        google.books.load();
+
+        function initialize() {
+            var viewer = new google.books.DefaultViewer(document.getElementById("readBook__dialog"));
+            viewer.load("ISBN:0596004478");
+            nextStep(viewer);
+        }
+        booksSection.closest();
+        google.books.setOnLoadCallback(initialize);
+    }))
+
+}
+
+function initialize(isbn) {
+    var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+    viewer.load(isbn);
 }
 
 let inputValue = "";
